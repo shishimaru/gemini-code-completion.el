@@ -7,6 +7,8 @@ gemini-code-completion.el is an Emacs package that provides code completion
 functionality using Google Gemini. This package can complete code based on the
 current cursor position or within a selected region.
 
+![Demo](./demo.gif "Demo")
+
 # Features
 
 - Code completion for the current buffer or a selected region.
