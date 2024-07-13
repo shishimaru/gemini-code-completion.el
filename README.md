@@ -104,8 +104,8 @@ Must not add duplicates by rewriting existing code.
 Take indentation as well.
 Must not exceed 2 lines to complete.
 
-The code is below:###
-")
+
+" "Default prompt to input into Google Gemini.")
 ```
 
 # License
