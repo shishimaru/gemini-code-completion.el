@@ -30,10 +30,9 @@
 (require 'google-gemini)
 
 (defvar gemini-code-completion-default-prompt
-  "Suggest only missing part of code at most just only 1 or 2 lines.
-Must not add duplicates by rewriting existing code.
-Take indentation as well.
-Must not exceed 2 lines to complete.
+  "Suggest only missing part to work as feature, at most just only 1 or 2 lines.
+Must not exceed 2 lines in suggesting.
+Take care indentation as well.
 
 
 " "Default prompt to input into Google Gemini.")
@@ -54,6 +53,7 @@ Must not exceed 2 lines to complete.
 
 (defun gemini-code-completion-handler (response)
   "Handle Gemini code completion RESPONSE."
+
   (let ((current-position (point))
         (completion-text (gemini-code-completion-extract-completion response)))
     (insert
@@ -66,10 +66,14 @@ Must not exceed 2 lines to complete.
     (goto-char current-position))) ; Restore cursor position
 
 ;;;###autoload
-(defun gemini-code-completion ()
-  "Get completion from Google Gemini for the current buffer or the selected region."
-  (interactive)
-  (let* ((selected-text
+(defun gemini-code-completion (prefix)
+  "Get completion from Google Gemini for current buffer or a selected region.
+If called with a PREFIX argument (\\[universal-argument]), prompt for additional
+text to customize the completion."
+  (interactive "P")
+
+  (let* ((user-prompt (if prefix (concat (read-string "Prompt: ") "\n\n") ""))
+         (selected-text
           (if (use-region-p)
               (buffer-substring-no-properties (region-beginning) (region-end))
             (buffer-substring-no-properties (point-min) (point))))
@@ -81,7 +85,7 @@ Must not exceed 2 lines to complete.
       (goto-char end)
       (google-gemini-content-generate
        (concat
-        gemini-code-completion-default-prompt selected-text)
+        user-prompt gemini-code-completion-default-prompt selected-text)
        #'gemini-code-completion-handler))))
 
 (provide 'gemini-code-completion)
