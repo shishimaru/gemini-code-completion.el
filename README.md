@@ -69,7 +69,15 @@ The API Key is used by a depending package
 M-x gemini-code-completion
 ```
 
-2. The package will generate code suggestions based on the context and insert
+
+2. To trigger code completion by indicating the detail what code you expect, use
+   the command with a prefix key C-u
+
+```
+C-u M-x gemini-code-completion
+```
+
+3. It will generate code suggestions based on the context and insert
    the completion at the current cursor position.
 
 # Functions
