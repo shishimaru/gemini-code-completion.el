@@ -13,8 +13,7 @@ current cursor position or within a selected region.
 
 - Code completion for the current buffer or a selected region.
 - Uses Google Gemini to generate code suggestions.
-- Automatically handles indentation and avoids duplicating existing code.
-- Completes up to 2 lines of code to avoid excessive modifications.
+- Optionally, append your prompt to customize the completion
 
 # Installation
 
@@ -27,13 +26,12 @@ Steps
 1. Ensure you have added MELPA repository in your Emacs configuration:
 
 ```
-Copy code
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 ```
 
-2. Install the google-gemini package:
+2. Install the dependent package, google-gemini:
 
 ```
 (package-install 'google-gemini)
@@ -50,8 +48,8 @@ Copy code
 (require 'gemini-code-completion)
 ```
 
-5. Set your API key freely published at [Google AI Studio](https://aistudio.google.com/app/apikey)
-to connect to Google Gemini
+5. Set your API key published in free at [Google AI Studio](https://aistudio.google.com/app/apikey)
+   to connect to Google Gemini
 
 The API Key is used by a depending package
 [google-gemini](https://github.com/emacs-openai/google-gemini) to send API requests to Gemini.
@@ -107,10 +105,9 @@ gemini-code-completion-default-prompt variable:
 
 ```
 (defvar gemini-code-completion-default-prompt
-  "Suggest only missing part of code at most just only 1 or 2 lines.
-Must not add duplicates by rewriting existing code.
-Take indentation as well.
-Must not exceed 2 lines to complete.
+  "Suggest only missing part to work as feature, at most just only 1 or 2 lines.
+Must not exceed 2 lines in suggesting.
+Take care indentation as well.
 
 
 " "Default prompt to input into Google Gemini.")
